@@ -1,0 +1,50 @@
+
+<html>
+<head>
+	<title>Schedule Your Day</title>
+	
+
+</head>
+<body>
+<head>
+<link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+<div id="outerContainer">
+<img src="./4.png" width=" 579px;" height="200px";/>
+
+<body>
+
+<div style="left:450px;top:0px;position:relative;">
+
+<a href="./AboutUs.html">
+<img src="ii.jpg"
+  alt="Help"
+  width="50" height="40" />
+</a>
+
+<a href="./Help.html">
+<img src="hh.jpg"
+  alt="Help"
+  width="50" height="40" />
+</a>
+</div>
+<br><br><br><br><br>
+
+<center><div>
+
+<a href="schedule.html">
+<img  src="./images/sch.jpg" alt="start" width="300" height="80"></a>
+<br><br>
+<a href="evaluate.html">
+<img  src="./images/eva.jpg" alt="evaluate" width="300" height="80"></a>
+<br><br>
+<a href="showhis.html">
+<img  src="./images/his.jpg" alt="history" width="300" height="80"></a>
+</div>
+</center>
+
+
+
+</div>
+</body>
+</html>
