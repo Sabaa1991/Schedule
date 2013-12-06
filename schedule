@@ -1,0 +1,493 @@
+<html>
+<head>
+<title>Schedule</title>
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.3.js"></script>
+ <script type="text/javascript" src="http://html5sql.com/js/html5sql.js"></script>
+ 
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link type="text/css" href="css/bootstrap.min.css" />
+        <link type="text/css" href="css/bootstrap-timepicker.min.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-2.2.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
+</head>
+
+<body>
+
+<script>
+<script type="text/javascript">
+            $('#timepicker1').timepicker();
+        </script>
+
+<script>
+
+	var falg=0;
+	var id;
+function clickid (clicked_id)
+	{
+		falg=1;
+		id = clicked_id;
+		addTask();
+	}
+	
+function addTask()
+	{
+	
+		if (falg==0)
+	{
+		var patt1=new RegExp("[+,-,*,/,),(,&,^,%,$,#,@,!,?,.,;,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]");
+		if(((patt1.test(document.getElementById("h").value))==false) || ((patt1.test(document.getElementById("m").value))==false))
+	{
+		if((document.getElementById("h").value=="")|| (document.getElementById("m").value=="") )
+			{
+				document.getElementById("err").innerHTML="Please fill the field first .. ";
+			}
+		else
+			{
+				countert();
+				displayTask();
+			}
+	}
+		else
+			{
+				document.getElementById("err2").innerHTML="Sorry ,Plz insert just a number  in Hr and m field ...";
+
+			}
+	}
+	else 
+	{
+		
+		var t=document.getElementById("undonetasks");
+		//alert (id + "on add task ");
+
+if (document.getElementById(""+id+"").clicked =true )
+    {
+	
+	counterun();
+	displayunTask();
+	}
+	else 
+	{
+		
+		alert ("no one select ");
+	}
+falg=0;
+}
+falg=0;
+}
+
+
+function Clear()
+{
+	document.getElementById("h").value="";
+	document.getElementById("m").value="";
+	document.getElementById("name3").value="";
+}
+
+function displayTask()
+{
+
+	var table=document.getElementById("myTable");
+	var row=table.insertRow(1);
+	var cell1=row.insertCell(0);
+	var cell2=row.insertCell(1);
+	var cell3=row.insertCell(2);
+	var cell4=row.insertCell(3);
+	function z(n){ return (n<10? '0':'') + n;};
+
+
+
+	var timenow=parseInt( document.getElementById('h').value ) + +parseInt (document.getElementById('m').value)*60;
+	var time=parseInt(z(timenow%(24*60)/60 | 0) + ':' + z(timenow%60));
+
+
+	cell1.innerHTML=document.getElementById("name3").value;
+	cell2.innerHTML=document.getElementById("startat").value;
+	cell4.innerHTML=document.getElementById('h').value+":"+document.getElementById('m').value;
+	var stime=document.getElementById('startat').value;
+	var h=document.getElementById('h').value;
+	var m=document.getElementById('m').value;
+
+	if(daymins <= 0)
+	{
+		cell3.innerHTML=document.getElementById("stime").value ;
+		document.getElementById("Done").disabled = false;
+	}
+  else
+  {
+	var end=addMinutes(document.getElementById('startat').value,document.getElementById('m').value, document.getElementById('h').value);
+	cell3.innerHTML=end;
+  }
+  
+	document.getElementById('startat').value=end;
+	Clear();
+}
+///////////////////////////////////////////displaaaaaaaaaaay
+
+function displayunTask()
+{
+
+var table=document.getElementById("myTable");
+var row=table.insertRow(1);
+var cell1=row.insertCell(0);
+var cell2=row.insertCell(1);
+var cell3=row.insertCell(2);
+var cell4=row.insertCell(3);
+
+function z(n){ return (n<10? '0':'') + n;};
+
+var undntable=document.getElementById("undonetasks");
+
+ rowun=document.getElementById("r"+id);
+ //alert(rowun);
+var d= rowun.cells[1].innerHTML.split(':');
+var hh=parseInt(d[0]);
+var min=parseInt(d[1]);
+
+var timenow=parseInt(hh + +min*60);
+ var time=parseInt(z(timenow%(24*60)/60 | 0) + ':' + z(timenow%60));
+
+
+cell1.innerHTML=rowun.cells[0].innerHTML;
+cell2.innerHTML=document.getElementById("startat").value;
+cell4.innerHTML=rowun.cells[1].innerHTML;
+var stime=document.getElementById('startat').value;
+
+
+if(daymins <= 0)
+  {
+  cell3.innerHTML=document.getElementById("stime").value ;
+    document.getElementById("Done").disabled = false;
+  }
+  else
+  {
+  var end=addMinutes(document.getElementById('startat').value,min, hh);
+  cell3.innerHTML=end;
+
+  }
+  
+document.getElementById('startat').value=end;
+
+
+Clear();
+falg=0;
+}
+
+function addMinutes(time, m,h)
+ {
+  function z(n){ return (n<10? '0':'') + n;};
+  var bits = time.split(':');
+  var mins = bits[0]*60 + +bits[1] + +m + +h*60
+
+  return z(mins%(24*60)/60 | 0) + ':' + z(mins%60); 
+ }  
+
+var daymins=24*60;
+function countert()
+{
+
+
+function z(n){ return (n<10? '0':'') + n;};
+var hh= parseInt(document.getElementById('h').value);
+var min=parseInt(document.getElementById('m').value);
+var durationsum=hh*60+ +min;
+daymins=daymins-durationsum;
+
+  if (daymins<=0)
+{
+
+  alert ("Now , your Day is full :D");
+  document.getElementById("h").disabled = true;
+  document.getElementById("m").disabled = true;
+  document.getElementById("name3").disabled = true;
+  document.getElementById("stime").disabled = true;
+  document.getElementById("startat").disabled = true;
+  document.getElementById("add").disabled = true;
+  document.getElementById('c').value=z(daymins%(24*60)/60 | 0) + ':' + z(daymins%60); 
+  document.getElementById("c").disabled = true;
+
+  }
+  
+  else 
+  {
+document.getElementById('c').value=z(daymins%(24*60)/60 | 0) + ':' + z(daymins%60);
+  }
+ }
+ //////////////////////////////////////counter////////////////////////////////////////////////////////////////////
+
+ function counterun()
+ {
+
+	function z(n){ return (n<10? '0':'') + n;};
+	var undntable=document.getElementById("undonetasks");
+	rowun=document.getElementById("r"+id);
+	var d= rowun.cells[1].innerHTML;
+	//alert (d);
+	var a= d.split(':');
+	//alert(a[0]+ ":" +a[1]);
+	var hh=parseInt(a[0]);
+	//alert (hh +"sa3at");
+	var min=parseInt(a[1]);
+	//alert (min +"min");
+	var durationsum=parseInt(hh*60+ +min);
+	//alert (durationsum +"mjmoo3 elmins in this task");
+	daymins=daymins-durationsum;
+	//alert (daymins +"km dal b3d ma add this task ");
+	if (daymins<=0)
+		{
+			alert ("Now , your Day is full ");
+			
+			document.getElementById('c').value=z(daymins%(24*60)/60 | 0) + ':' + z(daymins%60); 
+			// document.getElementById("c").disabled = true;
+		}
+  
+  else 
+		{
+			// alert ("lsa fi w8et m3k ya m3leeem ");
+			document.getElementById('c').value=z(daymins%(24*60)/60 | 0) + ':' + z(daymins%60);
+		}
+falg=0;
+ }
+ 
+ function DeleteRow(o) 
+ {
+     var p=o.parentNode.parentNode;
+     p.parentNode.removeChild(p);
+	
+	
+  }
+ 	</script>
+	
+ <script type="text/javascript">//<![CDATA[ 
+$(window).load(function(){
+$(function(){
+    //This must be called to open the connection to the database before any statements are processed
+    html5sql.openDatabase("exampleDBb1","Example Databaseb1",3*1024*1024);
+     var arr = [];
+	 var arrD = [];
+	 
+	$("#showDiv").click (function()
+	{      
+	        
+			if(document.getElementById("stime").value=="") 
+	{
+		document.getElementById("test").innerHTML="Please insert 'Day Starts At' field ";
+		document.getElementById('tasklist').style.display = "none";
+	}
+		else
+	{
+ 
+		$s=document.getElementById("stime").value;
+		document.getElementById("startat").value=$s;
+		document.getElementById('test').style.display = "none";
+		document.getElementById('tasklist').style.display = "block";
+		html5sql.process(
+             [
+			// "DROP TABLE IF EXISTS TasksTable;",
+			 "SELECT * FROM TasksTable;",
+			 ],
+			
+			   function(transaction, results, x)
+			   {
+				 //alert(x.length);
+				if(x.length !=0)
+				{
+					document.getElementById("undondiv").style.visibility = 'visible';
+				
+				//alert("in if");
+				var table=document.getElementById("undonetasks");
+				  for(var i = 0; i < x.length; i++)
+				   {
+				   //alert(x[i].taskname);
+				   
+					//alert (i);
+				   var unDoneTask="<input type='button' name='done' value='Add' id='"+i+"' onclick='clickid("+i+");DeleteRow(this)'/>";  
+				   var row1=table.insertRow(1);
+				   row1.id = "r"+i;
+					var cell0=row1.insertCell(0);
+					var cell1=row1.insertCell(1);
+					var cell2=row1.insertCell(2);
+					cell0.innerHTML=x[i].taskname;
+					cell1.innerHTML=x[i].duration;
+					cell2.innerHTML=unDoneTask;
+					
+				   
+				   /*
+					document.getElementById("name3").value=x[i].taskname;
+					//document.getElementById("m").value=x[i].taskname;
+					var bits = x[i].duration.split(':');
+					document.getElementById('h').value=bits[0];
+					document.getElementById('m').value=bits[1];*/
+					}
+					
+                }
+				
+else
+{
+	alert("there is no un done task!!,plz go to start to fill your tasks");
+}					
+ },
+ 
+ 
+          function(){
+			//alert("done insert");
+                // successfullStatements.append("<li>Created Star Wars Characters Table</li>");
+             },
+             function(error, statement){
+			  alert("error insert");
+                // errors.append("<li>"+error.message+" Occured while processing: "+statement+"</li>");
+             }
+			 
+ );	
+	}
+});
+
+
+
+    $("#Done").click(function(){
+	
+     
+           
+			// alert("in creating");
+		     for (var x = 1, row; row = myTable.rows[x]; x++)
+	     	   {
+			   if(row.cells.length == 4)
+			   {
+		     arr.push(row.cells[0].innerHTML);
+		     arrD.push(row.cells[3].innerHTML);
+		       }
+		       }
+		
+		 
+	
+		       
+			html5sql.process(
+		
+                [
+                "DROP TABLE IF EXISTS TasksTable;",
+                "CREATE TABLE IF NOT EXISTS TasksTable (id INTEGER PRIMARY KEY AUTOINCREMENT, taskname TEXT,duration TEXT );",
+  
+                 ],
+                function(){
+				alert("done CREAT ");
+                 //successfullStatements.append("<li>Created TasksTable Table</li>");
+             },
+             function(error, statement){
+			 
+			 alert("error");
+                // errors.append("<li>"+error.message+" Occured while processing: "+statement+"</li>");
+             }
+        );
+       
+           for (var x=0;x<arr.length;x++)
+        {
+          
+			
+        html5sql.process(
+             [
+                
+               // "INSERT INTO TasksTable (taskname) VALUES ('" + arr[x] + "');",
+				"INSERT INTO TasksTable (taskname, duration) VALUES ('" + arr[x] + "','" + arrD[x] + "');",
+
+
+				
+                
+             ],
+			
+           function(){
+			alert("done insert");
+                // successfullStatements.append("<li>Created Star Wars Characters Table</li>");
+             },
+             function(error, statement){
+			  alert("error insert");
+                // errors.append("<li>"+error.message+" Occured while processing: "+statement+"</li>");
+             }
+        );
+            	
+        }
+				alert ("Go to home page to rate your day");
+    });
+			
+	
+	});
+
+	});
+
+</script>
+
+
+<head>
+<link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+<div id="outerContainer">
+<img src="./4.png" width=" 579px;" height="200px";/>
+<div style="left:490px;top:0px;position:relative;width:60px;"><a href="./Index.html"><img src="home.jpg" alt="home" width="60" height="60"/></a></div>
+<table border="0">
+<tr>
+<td><font size="3" face ="Verdana" color="White">Day Starts At</font></td>
+<td></td><td><input type="time" name="Start" id="stime"></td>
+
+<td><input type="submit" id ="showDiv" name="Start"></td>
+</tr>
+</table>
+<div id="tasklist" style="display:none;background-color=white" >
+
+<table border="0" >
+<tr>
+<td><font  id="taskname" size="3" face ="Verdana" color="White">Task Name</font></td>
+<td><input type="text" name="name" id="name3" /></td>
+</tr>
+<tr>
+<td><font size="3" face ="Verdana" color="White">Start At</font></td>
+<td><input type="time" name="startat" id="startat"></td>
+</tr>
+<tr>
+<td><font size="3" face ="Verdana" color="white">Duration</font></td>
+<td><input type="text" id="h" name="hours" size="5"></td>
+<td width="5px"><font color="White">:</font></td>
+<td><input type="text" id="m" name="minutes" size="5"><font size="3" face ="Verdana" color="White"> Hr:m</font></td>
+</tr>
+<tr>
+<td><input type="submit" name="AddTask" value="Add Task" id="add"  onclick="addTask()"></td>
+<td> <input type="text" id="c" size="5"  value="24:00" ><font color="White">Time left</font></td>
+<td> <input type="button" id="Done" value="Done" disabled=true/> </td>
+</tr>
+</table>
+<br><br><br>
+<center><div style="background-color:#ffffff;width:400px;border:3px solid #ffffff;padding:0px; visibility:hidden;" id="undondiv">
+<font size="3" face ="Verdana" color="black"><p style=" margin:10;padding:0;">Undone Tasks</p></font>
+<table border="1" id="undonetasks">
+<tr><td>Task Name</td>
+<td>Duration</td>
+<td>Option</td>
+</tr>
+
+</table>
+
+</div></center>
+
+
+<br>
+<center>
+<div style = "background-image:url('./table.jpg');background-repeat:repeat-x;">
+<table border="1" width="90%" id="myTable">
+<tr>
+<th><font size="2" face ="Verdana" color="White"> Task Name</font> </th>
+<th><font size="2" face ="Verdana" color="White"> Start At</font> </th>
+<th><font size="2" face ="Verdana" color="White"> End At </font></th>
+<th><font size="2" face ="Verdana" color="White"> Duration </font></th>
+</tr>
+<tr>
+</table> 
+</div>
+</center>
+
+</div>
+
+<font color='#FF0066' size='3'><div id="test" style="width:500px;background:white;top:0px;left:0px;position:relative; "></div></font>
+<font color='#FF0066' size='3'><div  id="err" style="width:500px;background:white;top:0px;left:0px;position:relative ;"></div></font>
+<font color='#FF0066' size='3'><div  id="err2" style="width:500px;background:white;top:0px;left:0px;position:relative;"></div></font>
+</div>
+</body>
+</html>
